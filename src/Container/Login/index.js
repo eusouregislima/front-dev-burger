@@ -4,6 +4,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { toast } from 'react-toastify'
 
+import { useUser } from '../../hooks/UserContext'
 import Button from '../../components/Button'
 import LoginImg from '../../assets/loginImg.svg'
 import Logo from '../../assets/logo.png'
@@ -20,6 +21,10 @@ import {
 } from './styles'
 
 function Login() {
+  const users = useUser()
+
+  console.log(users)
+
   const schema = yup
     .object({
       email: yup

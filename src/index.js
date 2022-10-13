@@ -5,11 +5,14 @@ import { ToastContainer } from 'react-toastify'
 import Login from './Container/Login'
 import Register from './Container/Register'
 import GlobalStyles from './styles/globalstyles'
+import { UserProvider } from './hooks/UserContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <>
-    <Register />
+    <UserProvider>
+      <Login />
+    </UserProvider>
     <ToastContainer autoClose={2000} theme="colored" />
     <GlobalStyles />
   </>,
