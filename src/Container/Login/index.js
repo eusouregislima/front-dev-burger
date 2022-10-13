@@ -2,17 +2,19 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { toast } from 'react-toastify'
 
+import Button from '../../components/Button'
 import LoginImg from '../../assets/loginImg.svg'
 import Logo from '../../assets/logo.png'
+import api from '../../services/api'
 
 import {
   Container,
   LoginImage,
   ContainerItens,
-  Input,
-  Button,
   SignInLink,
+  Input,
   Label,
   ErrorMessage,
 } from './styles'
@@ -39,7 +41,20 @@ function Login() {
     resolver: yupResolver(schema),
   })
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = async (clientData) => {
+    const response = await toast.promise(
+      api.post('sessions', {
+        email: clientData.email,
+        password: clientData.password,
+      }),
+      {
+        pending: 'Verificando os dados',
+        success: 'Seja bem-vindo(a)',
+        error: 'Verifique seu email e/ou senha',
+      },
+    )
+    console.log(response)
+  }
 
   return (
     <Container>
@@ -49,7 +64,7 @@ function Login() {
         <h1>Login</h1>
 
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Label>Email</Label>
+          <Label error={errors.email?.message}>Email</Label>
 
           <Input
             type="email"
@@ -57,7 +72,7 @@ function Login() {
             error={errors.email?.message}
           />
           <ErrorMessage>{errors.email?.message}</ErrorMessage>
-          <Label>Senha</Label>
+          <Label error={errors.password?.message}>Senha</Label>
 
           <Input
             type="password"
@@ -66,7 +81,9 @@ function Login() {
           />
           <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
-          <Button type="submit">Entrar</Button>
+          <Button type="submit" style={{ marginTop: 55, marginBottom: 15 }}>
+            Entrar
+          </Button>
         </form>
 
         <SignInLink>
