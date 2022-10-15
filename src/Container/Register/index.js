@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 import Button from '../../components/Button'
 import RegisterImg from '../../assets/register-image.svg'
@@ -110,7 +111,10 @@ function Register() {
         </form>
 
         <SignInLink>
-          Já possui conta? <a>Faça Login</a>
+          Já possui conta?{' '}
+          <Link style={{ color: 'white' }} to="/login">
+            Faça Login
+          </Link>
         </SignInLink>
       </ContainerItens>
     </Container>
